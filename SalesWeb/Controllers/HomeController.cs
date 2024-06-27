@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using SalesWeb.Models;
+using SalesWeb.Models.ViewModels;
 using System.Diagnostics;
 
 namespace SalesWeb.Controllers
@@ -15,11 +15,13 @@ namespace SalesWeb.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 
         public IActionResult Privacy()
         {
+            ViewData["Message"] = "Meu site Elisberto";
             return View();
         }
 
