@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesWeb.Models;
+using SalesWeb.Models.ViewModels;
 using SalesWeb.Services;
 
 namespace SalesWeb.Controllers
@@ -8,10 +9,14 @@ namespace SalesWeb.Controllers
     {
         private readonly SellerService _service;
 
-        public SellersController(SellerService service)
+        private readonly DepartmentService _departmentService;
+
+        public SellersController(SellerService service, DepartmentService departmentService)
         {
             _service = service;
+            _departmentService = departmentService;
         }
+
         public async Task<IActionResult> Index()
         {
             var list = await _service.FindAll();
@@ -20,7 +25,9 @@ namespace SalesWeb.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return View();
+            var departments = await _departmentService.FindAll();
+            var viewModel = new SellerFormViewModel { Departments = departments };
+            return View(viewModel);
         }
 
         [HttpPost]
